@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using HttpClientFactoryUsingSample.Models;
 using Microsoft.AspNetCore.Mvc;
+using HttpClientFactoryUsingSample.Extensions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,7 +14,7 @@ namespace HttpClientFactoryUsingSample.Controllers
 {
     [Route("api/todos")]
     [ApiController]
-    public class TodosController : BaseController
+    public class TodosController : ControllerBase
     {
         HttpClient _httpClient;
         public TodosController(IHttpClientFactory httpClientFactory)
@@ -26,7 +27,7 @@ namespace HttpClientFactoryUsingSample.Controllers
         {
             var url = "https://jsonplaceholder.typicode.com/todos";
             var todosJson = await _httpClient.GetStringAsync(url);
-            var todos = Deserialize<IEnumerable<Todo>>(todosJson);
+            var todos = todosJson.Deserialize<IEnumerable<Todo>>();
             return Ok(todos);
         }
 
