@@ -31,7 +31,8 @@ namespace HttpClientFactoryUsingSample
                 c.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactoryUsingSample");
             }).AddHttpMessageHandler<ValidateUserAgentKeyHeaderHandler>();
             services.AddHttpClient<DummyEmployeeService>()
-                .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromSeconds(500)));
+                .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _=>TimeSpan.FromSeconds(6)))
+                .AddTransientHttpErrorPolicy(p => p.CircuitBreakerAsync(5, TimeSpan.FromSeconds(30)));
             services.AddControllers();
         }
 
