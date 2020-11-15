@@ -11,7 +11,7 @@ namespace HttpClientFactoryUsingSample.Controllers
     [ApiController]
     public class MovieController : ControllerBase
     {
-        HttpClient _httpClient;
+       readonly HttpClient _httpClient;
         public MovieController(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient("movie-sample-api");

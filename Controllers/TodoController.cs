@@ -16,7 +16,7 @@ namespace HttpClientFactoryUsingSample.Controllers
     [ApiController]
     public class TodosController : ControllerBase
     {
-        HttpClient _httpClient;
+       readonly HttpClient _httpClient;
         public TodosController(IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClientFactory.CreateClient();
