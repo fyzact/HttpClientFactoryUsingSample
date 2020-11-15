@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using HttpClientFactoryUsingSample.DelegatingHandlers;
+using Polly;
 
 namespace HttpClientFactoryUsingSample
 {
@@ -29,7 +30,8 @@ namespace HttpClientFactoryUsingSample
                
                 c.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactoryUsingSample");
             }).AddHttpMessageHandler<ValidateUserAgentKeyHeaderHandler>();
-            services.AddHttpClient<DummyEmployeeService>();
+            services.AddHttpClient<DummyEmployeeService>()
+                .AddTransientHttpErrorPolicy(p => p.WaitAndRetryAsync(3, _ => TimeSpan.FromSeconds(500)));
             services.AddControllers();
         }
 

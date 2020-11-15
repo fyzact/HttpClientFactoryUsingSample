@@ -8,7 +8,7 @@ using HttpClientFactoryUsingSample.Extensions;
 
 namespace HttpClientFactoryUsingSample.Services
 {
-    public class DummyEmployeeService : 
+    public class DummyEmployeeService  
     {
         readonly HttpClient _httpClient;
         public DummyEmployeeService(HttpClient httpClient)
